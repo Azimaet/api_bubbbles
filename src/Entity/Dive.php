@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use App\Repository\DiveRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DiveRepository;
+use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ *     denormalizationContext={"groups"={"write"}}
+ * )
  * @ORM\Entity(repositoryClass=DiveRepository::class)
  */
 class Dive
@@ -18,21 +22,25 @@ class Dive
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read", "write"})
      */
     private $datetime;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"read", "write"})
      */
     private $totalTime;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"read", "write"})
      */
     private $maxDepth;
 
