@@ -28,6 +28,12 @@ class User
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=12)
+     * @Groups({"read"})
+     */
+    private $uid;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read", "write"})
      */
@@ -62,9 +68,33 @@ class User
      */
     private $registrationDate;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $nationality;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"read", "write"})
+     */
+    private $isPublicName;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"read", "write"})
+     */
+    private $isPublicProfile;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Level::class, inversedBy="users")
+     */
+    private $levels;
+
     public function __construct()
     {
         $this->dives = new ArrayCollection();
+        $this->levels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,6 +185,78 @@ class User
     public function setRegistrationDate(\DateTimeInterface $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(?string $nationality): self
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    public function getIsPublicName(): ?bool
+    {
+        return $this->isPublicName;
+    }
+
+    public function setIsPublicName(bool $isPublicName): self
+    {
+        $this->isPublicName = $isPublicName;
+
+        return $this;
+    }
+
+    public function getIsPublicProfile(): ?bool
+    {
+        return $this->isPublicProfile;
+    }
+
+    public function setIsPublicProfile(bool $isPublicProfile): self
+    {
+        $this->isPublicProfile = $isPublicProfile;
+
+        return $this;
+    }
+
+    public function getUid(): ?string
+    {
+        return $this->uid;
+    }
+
+    public function setUid(string $uid): self
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Level[]
+     */
+    public function getLevels(): Collection
+    {
+        return $this->levels;
+    }
+
+    public function addLevel(Level $level): self
+    {
+        if (!$this->levels->contains($level)) {
+            $this->levels[] = $level;
+        }
+
+        return $this;
+    }
+
+    public function removeLevel(Level $level): self
+    {
+        $this->levels->removeElement($level);
 
         return $this;
     }
