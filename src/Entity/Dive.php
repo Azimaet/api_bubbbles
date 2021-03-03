@@ -49,6 +49,18 @@ class Dive
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"read"})
+     */
+    private $publishedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"read"})
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -115,6 +127,30 @@ class Dive
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
