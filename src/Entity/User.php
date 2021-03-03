@@ -56,6 +56,12 @@ class User
      */
     private $dives;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"read"})
+     */
+    private $registrationDate;
+
     public function __construct()
     {
         $this->dives = new ArrayCollection();
@@ -137,6 +143,18 @@ class User
         if ($this->dives->removeElement($dive)) {
             $dive->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getRegistrationDate(): ?\DateTimeInterface
+    {
+        return $this->registrationDate;
+    }
+
+    public function setRegistrationDate(\DateTimeInterface $registrationDate): self
+    {
+        $this->registrationDate = $registrationDate;
 
         return $this;
     }
