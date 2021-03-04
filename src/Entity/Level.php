@@ -34,16 +34,6 @@ class Level
      */
     private $score;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="levels")
-     */
-    private $users;
-
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -81,33 +71,6 @@ class Level
     public function setScore(float $score): self
     {
         $this->score = $score;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addLevel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeLevel($this);
-        }
 
         return $this;
     }
