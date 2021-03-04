@@ -30,7 +30,7 @@ class Dive
      * @ORM\Column(type="datetime")
      * @Groups({"read", "write"})
      */
-    private $datetime;
+    private $date;
 
     /**
      * @ORM\Column(type="integer")
@@ -71,14 +71,14 @@ class Dive
         return $this->id;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->datetime;
+        return $this->date;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->datetime = $datetime;
+        $this->date = $date;
 
         return $this;
     }
