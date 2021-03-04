@@ -11,8 +11,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"read"}},
- *     denormalizationContext={"groups"={"write"}}
+ *     normalizationContext={"groups"={"dive:read"}},
+ *     denormalizationContext={"groups"={"dive:write"}},
  * )
  * @ORM\Entity(repositoryClass=DiveRepository::class)
  */
@@ -22,37 +22,37 @@ class Dive
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({"dive:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"read", "write"})
+     * @Groups({"dive:read", "dive:write"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"read", "write"})
+     * @Groups({"dive:read", "dive:write"})
      */
     private $totalTime;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"read", "write"})
+     * @Groups({"dive:read", "dive:write"})
      */
     private $maxDepth;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"read"})
+     * @Groups({"dive:read"})
      */
     private $publishedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read"})
+     * @Groups({"dive:read"})
      */
     private $updatedAt;
 
