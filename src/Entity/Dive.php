@@ -61,6 +61,12 @@ class Dive
      */
     private $users;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -154,6 +160,18 @@ class Dive
         if ($this->users->removeElement($user)) {
             $user->removeDive($this);
         }
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
