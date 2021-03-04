@@ -57,7 +57,7 @@ class Dive
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Dives")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="dives")
      */
     private $users;
 

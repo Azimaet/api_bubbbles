@@ -6,9 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface
@@ -49,11 +51,11 @@ class User implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity=Dive::class, inversedBy="users")
      */
-    private $Dives;
+    private $dives;
 
     public function __construct()
     {
-        $this->Dives = new ArrayCollection();
+        $this->dives = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,13 +163,13 @@ class User implements UserInterface
      */
     public function getDives(): Collection
     {
-        return $this->Dives;
+        return $this->dives;
     }
 
     public function addDive(Dive $dive): self
     {
-        if (!$this->Dives->contains($dive)) {
-            $this->Dives[] = $dive;
+        if (!$this->dives->contains($dive)) {
+            $this->dives[] = $dive;
         }
 
         return $this;
@@ -175,7 +177,7 @@ class User implements UserInterface
 
     public function removeDive(Dive $dive): self
     {
-        $this->Dives->removeElement($dive);
+        $this->dives->removeElement($dive);
 
         return $this;
     }
