@@ -64,12 +64,14 @@ class Dive
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"dive:read", "dive:write"})
      */
     private $owner;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->publishedAt = new \DateTime();
     }
 
     public function getId(): ?int
