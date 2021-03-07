@@ -28,19 +28,19 @@ class Dive
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"dive:read", "dive:write"})
+     * @Groups({"dive:read", "dive:write", "user:read"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"dive:read", "dive:write"})
+     * @Groups({"dive:read", "dive:write", "user:read"})
      */
     private $totalTime;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"dive:read", "dive:write"})
+     * @Groups({"dive:read", "dive:write", "user:read"})
      */
     private $maxDepth;
 
@@ -57,12 +57,7 @@ class Dive
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="dives")
-     */
-    private $users;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="dives")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"dive:read", "dive:write"})
      */
@@ -70,7 +65,6 @@ class Dive
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->publishedAt = new \DateTime();
     }
 
@@ -135,33 +129,6 @@ class Dive
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addDive($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeDive($this);
-        }
 
         return $this;
     }

@@ -64,7 +64,8 @@ class User implements UserInterface
     private $nationality;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Dive::class, inversedBy="users")
+     * @ORM\OneToMany(targetEntity=Dive::class, mappedBy="owner")
+     * @Groups({"user:read"})
      */
     private $dives;
 
@@ -92,15 +93,7 @@ class User implements UserInterface
 
     /**
      * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
+     * 
      * @see UserInterface
      */
     public function getRoles(): array
@@ -154,6 +147,11 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -185,6 +183,7 @@ class User implements UserInterface
     {
         if (!$this->dives->contains($dive)) {
             $this->dives[] = $dive;
+            $dive->setOwner($this);
         }
 
         return $this;
@@ -192,8 +191,13 @@ class User implements UserInterface
 
     public function removeDive(Dive $dive): self
     {
-        $this->dives->removeElement($dive);
-
+        if ($this->dives->contains($dive)) {
+            $this->dives->removeElement($dive);
+            // set the owning side to null (unless already changed)
+            if ($dive->getOwner() === $this) {
+                $dive->setOwner(null);
+            }
+        }
         return $this;
     }
 }
