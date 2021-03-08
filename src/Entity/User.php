@@ -52,7 +52,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"user:read", "dive:item:get", "user:write"})
+     * @Groups({"user:read", "user:write", "dive:item:get", "dive:write"})
      * @Assert\NotBlank()
      */
     private $username;
@@ -65,9 +65,10 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Dive::class, mappedBy="owner")
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "user:write"})
      */
     private $dives;
+    // Todo, open dives writing on user post method => https://symfonycasts.com/screencast/api-platform/collections-write#play
 
     public function __construct()
     {

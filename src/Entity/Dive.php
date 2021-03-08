@@ -7,7 +7,9 @@ use App\Repository\DiveRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -72,6 +74,7 @@ class Dive
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="dives")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"dive:read", "dive:write"})
+     * @Assert\Valid()
      */
     private $owner;
 
