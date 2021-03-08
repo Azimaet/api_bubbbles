@@ -52,14 +52,14 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "dive:item:get", "user:write"})
      * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=2)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:item:get", "user:write"})
      */
     private $nationality;
 

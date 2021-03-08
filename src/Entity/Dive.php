@@ -11,8 +11,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"dive:read"}},
- *     denormalizationContext={"groups"={"dive:write"}},
+ *     collectionOperations={"get", "post"},
+ *     itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"dive:read", "dive:item:get"}},
+ *          },
+ *          "put"
+ *     },
+ *     shortName="dives",
+ *     normalizationContext={"groups"={"dive:read"}, "swagger_definition_name"="Read"},
+ *     denormalizationContext={"groups"={"dive:write"}, "swagger_definition_name"="Write"},
+ *     attributes={
+ *          "pagination_items_per_page"=10,
+ *          "formats"={"jsonld", "json", "html", "csv"={"text/csv"}}
+ *     }
  * )
  * @ORM\Entity(repositoryClass=DiveRepository::class)
  */
