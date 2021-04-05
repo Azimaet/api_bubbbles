@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          },
  *          "put"
  *     },
- *     shortName="dives",
+ *     shortName="Dive",
  *     normalizationContext={"groups"={"dive:read"}, "swagger_definition_name"="Read"},
  *     denormalizationContext={"groups"={"dive:write"}, "swagger_definition_name"="Write"},
  *     attributes={
@@ -78,9 +78,18 @@ class Dive
      */
     private $owner;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Gaz::class, mappedBy="dive")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"dive:read", "dive:write"})
+     * @Assert\Valid()
+     */
+    private $gazs;
+
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
+        $this->gazs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +165,33 @@ class Dive
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gaz[]
+     */
+    public function getGazs(): Collection
+    {
+        return $this->gazs;
+    }
+
+    public function addGaz(Gaz $gaz): self
+    {
+        if (!$this->gazs->contains($gaz)) {
+            $this->gazs[] = $gaz;
+            $gaz->addDive($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGaz(Gaz $gaz): self
+    {
+        if ($this->gazs->removeElement($gaz)) {
+            $gaz->removeDive($this);
+        }
 
         return $this;
     }

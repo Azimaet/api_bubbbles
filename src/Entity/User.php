@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * @ApiResource(
@@ -52,7 +53,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"user:read", "user:write", "dive:item:get", "dive:write"})
+     * @Groups({"user:read", "user:write", "dive:item:get"})
      * @Assert\NotBlank()
      */
     private $username;
@@ -64,11 +65,12 @@ class User implements UserInterface
     private $nationality;
 
     /**
-     * @ORM\OneToMany(targetEntity=Dive::class, mappedBy="owner")
+     * @ORM\OneToMany(targetEntity=Dive::class, mappedBy="owner", cascade={"persist"}, orphanRemoval=true)
      * @Groups({"user:read", "user:write"})
+     * @Assert\Valid()
+     * @ApiSubresource()
      */
     private $dives;
-    // Todo, open dives writing on user post method => https://symfonycasts.com/screencast/api-platform/collections-write#play
 
     public function __construct()
     {
