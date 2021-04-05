@@ -78,9 +78,15 @@ class Dive
      */
     private $owner;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="dive", orphanRemoval=true)
+     */
+    private $gazs;
+
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
+        $this->gazs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +162,36 @@ class Dive
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gaz[]
+     */
+    public function getGazs(): Collection
+    {
+        return $this->gazs;
+    }
+
+    public function addGaz(Gaz $gaz): self
+    {
+        if (!$this->gazs->contains($gaz)) {
+            $this->gazs[] = $gaz;
+            $gaz->setDive($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGaz(Gaz $gaz): self
+    {
+        if ($this->gazs->removeElement($gaz)) {
+            // set the owning side to null (unless already changed)
+            if ($gaz->getDive() === $this) {
+                $gaz->setDive(null);
+            }
+        }
 
         return $this;
     }

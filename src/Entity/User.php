@@ -72,9 +72,15 @@ class User implements UserInterface
      */
     private $dives;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $gazs;
+
     public function __construct()
     {
         $this->dives = new ArrayCollection();
+        $this->gazs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,6 +207,36 @@ class User implements UserInterface
                 $dive->setOwner(null);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @return Collection|Gaz[]
+     */
+    public function getGazs(): Collection
+    {
+        return $this->gazs;
+    }
+
+    public function addGaz(Gaz $gaz): self
+    {
+        if (!$this->gazs->contains($gaz)) {
+            $this->gazs[] = $gaz;
+            $gaz->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGaz(Gaz $gaz): self
+    {
+        if ($this->gazs->removeElement($gaz)) {
+            // set the owning side to null (unless already changed)
+            if ($gaz->getUser() === $this) {
+                $gaz->setUser(null);
+            }
+        }
+
         return $this;
     }
 }
