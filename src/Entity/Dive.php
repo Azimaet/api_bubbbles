@@ -80,6 +80,7 @@ class Dive
 
     /**
      * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="dive", orphanRemoval=true)
+     * @Groups({"dive:read", "dive:write"})
      */
     private $gazs;
 

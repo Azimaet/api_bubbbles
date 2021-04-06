@@ -5,10 +5,24 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\GazRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
  *      collectionOperations={"get", "post"},
+ *      itemOperations={
+ *          "get"={
+ *              "normalization_context"={"groups"={"gaz:read"}},
+ *          },
+ *          "put"
+ *     },
+ *     shortName="Gaz",
+ *     normalizationContext={"groups"={"gaz:read"}, "swagger_definition_name"="Read"},
+ *     denormalizationContext={"groups"={"gaz:write"}, "swagger_definition_name"="Write"},
+ *     attributes={
+ *          "pagination_items_per_page"=10,
+ *          "formats"={"jsonld", "json", "html", "csv"={"text/csv"}}
+ *     }
  * )
  * @ORM\Entity(repositoryClass=GazRepository::class)
  */
@@ -23,36 +37,43 @@ class Gaz
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $startPressure;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $endPressure;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $oxygen;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $nitrogen;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $helium;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
      */
     private $hydrogen;
 

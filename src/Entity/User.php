@@ -74,6 +74,9 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="user", orphanRemoval=true)
+     * @Groups({"user:read", "user:write"})
+     * @Assert\Valid()
+     * @ApiSubresource()
      */
     private $gazs;
 
