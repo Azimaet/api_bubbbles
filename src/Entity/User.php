@@ -66,7 +66,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Dive::class, mappedBy="owner", cascade={"persist"}, orphanRemoval=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @Assert\Valid()
      * @ApiSubresource()
      */
@@ -74,7 +74,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="user", orphanRemoval=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @Assert\Valid()
      * @ApiSubresource()
      */

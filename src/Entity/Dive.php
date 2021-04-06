@@ -79,7 +79,7 @@ class Dive
     private $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="dive", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Gaz::class, mappedBy="dive", orphanRemoval=true, cascade={"persist"})
      * @Groups({"dive:read", "dive:write"})
      */
     private $gazs;
@@ -180,6 +180,7 @@ class Dive
         if (!$this->gazs->contains($gaz)) {
             $this->gazs[] = $gaz;
             $gaz->setDive($this);
+            $gaz->setUser($this->getOwner());
         }
 
         return $this;

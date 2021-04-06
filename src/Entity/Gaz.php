@@ -37,54 +37,56 @@ class Gaz
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $startPressure;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $endPressure;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $oxygen;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $nitrogen;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $helium;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"gaz:read", "gaz:write", "dive:item:get"})
+     * @Groups({"gaz:read", "gaz:write", "dive:item:get", "dive:write"})
      */
     private $hydrogen;
 
     /**
      * @ORM\ManyToOne(targetEntity=Dive::class, inversedBy="gazs")
+     * @Groups({"gaz:read", "gaz:write", "dive:write"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $dive;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="gazs")
+     * @Groups({"gaz:read", "gaz:write", "dive:write"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
