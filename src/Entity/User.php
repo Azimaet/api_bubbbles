@@ -60,7 +60,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=2)
-     * @Groups({"user:item:get", "user:write"})
+     * @Groups({"user:item:get", "user:write", "dive:item:get"})
      */
     private $nationality;
 

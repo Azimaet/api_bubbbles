@@ -84,6 +84,24 @@ class Dive
      */
     private $gazs;
 
+    /**
+     * @ORM\Column(type="string", length=8, nullable=true)
+     * @Groups({"dive:read", "dive:write"})
+     */
+    private $temperature;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"dive:read", "dive:write"})
+     */
+    private $environment;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"dive:read", "dive:write"})
+     */
+    private $status;
+
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
@@ -194,6 +212,42 @@ class Dive
                 $gaz->setDive(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTemperature(): ?string
+    {
+        return $this->temperature;
+    }
+
+    public function setTemperature(?string $temperature): self
+    {
+        $this->temperature = $temperature;
+
+        return $this;
+    }
+
+    public function getEnvironment(): ?string
+    {
+        return $this->environment;
+    }
+
+    public function setEnvironment(?string $environment): self
+    {
+        $this->environment = $environment;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
