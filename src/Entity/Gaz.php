@@ -9,7 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
- *      collectionOperations={"get", "post"},
+ *      collectionOperations={"get"},
  *      itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"gaz:read"}},
