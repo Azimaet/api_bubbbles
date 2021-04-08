@@ -102,10 +102,16 @@ class Dive
      */
     private $status;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Theme::class, mappedBy="dive")
+     */
+    private $themes;
+
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
         $this->gazs = new ArrayCollection();
+        $this->themes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +254,33 @@ class Dive
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Theme[]
+     */
+    public function getThemes(): Collection
+    {
+        return $this->themes;
+    }
+
+    public function addTheme(Theme $theme): self
+    {
+        if (!$this->themes->contains($theme)) {
+            $this->themes[] = $theme;
+            $theme->addDive($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTheme(Theme $theme): self
+    {
+        if ($this->themes->removeElement($theme)) {
+            $theme->removeDive($this);
+        }
 
         return $this;
     }
