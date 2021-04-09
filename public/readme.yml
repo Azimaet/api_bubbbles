@@ -1,0 +1,6 @@
+# Dive:
+  GET: /api/dives #Récupère la collection de Dives, embedded => (la collection de gazs @id, le username @id)
+  GET: /api/dives/{id} #Récupère l'objet Dive complet, embedded => (la collection de gazs complet + le username)
+  GET: /api/users/{id}/dives #Récupère la collection de dives du User, embedded => (la collection de gazs @id + le username)
+
+  

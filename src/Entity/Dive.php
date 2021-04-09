@@ -104,6 +104,7 @@ class Dive
 
     /**
      * @ORM\ManyToMany(targetEntity=Theme::class, mappedBy="dive")
+     * @Groups({"dive:read", "dive:write"})
      */
     private $themes;
 
